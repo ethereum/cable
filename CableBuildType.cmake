@@ -1,7 +1,16 @@
 # Copyright 2018 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0. See the LICENSE file.
 
+if(cable_build_type_included)
+    return()
+endif()
+set(cable_build_type_included TRUE)
+
 macro(cable_set_build_type)
+    if(NOT PROJECT_SOURCE_DIR)
+        message(FATAL_ERROR "cable_set_build_type() can be used only after project()")
+    endif()
+
     cmake_parse_arguments(build_type "" DEFAULT CONFIGURATION_TYPES ${ARGN})
 
     if(CMAKE_CONFIGURATION_TYPES)

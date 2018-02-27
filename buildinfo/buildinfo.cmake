@@ -5,13 +5,19 @@
 # file only if the hash changes.
 file(READ ${BINARY_DIR}/git_commit_hash.txt GIT_COMMIT_HASH)
 
+string(TOLOWER ${SYSTEM_NAME} SYSTEM_NAME)
+string(TOLOWER ${COMPILER_ID} COMPILER_ID)
+string(TOLOWER ${BUILD_TYPE} BUILD_TYPE)
 string(TIMESTAMP TIMESTAMP)
-configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${NAME}.c)
 
 message(
-    "       Project Version: ${PROJECT_VERSION}\n"
-    "       Git Commit Hash: ${GIT_COMMIT_HASH}\n"
-    "       Timestamp:       ${TIMESTAMP}"
+    "       Project Version:  ${PROJECT_VERSION}\n"
+    "       System Name:      ${SYSTEM_NAME}\n"
+    "       Compiler ID:      ${COMPILER_ID}\n"
+    "       Compiler Version: ${COMPILER_VERSION}\n"
+    "       Build Type:       ${BUILD_TYPE}\n"
+    "       Git Commit Hash:  ${GIT_COMMIT_HASH}\n"
+    "       Timestamp:        ${TIMESTAMP}"
 )
 
-
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${NAME}.c)

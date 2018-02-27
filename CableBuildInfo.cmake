@@ -1,11 +1,34 @@
 # Copyright 2018 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0. See the LICENSE file.
 
+if(cable_build_info_included)
+    return()
+endif()
+set(cable_build_info_included TRUE)
+
+
 set(cable_buildinfo_template_dir ${CMAKE_CURRENT_LIST_DIR}/buildinfo)
 
-function(cable_add_buildinfo_library NAME)
+function(cable_add_buildinfo_library)
+
+    cmake_parse_arguments("" "" PREFIX "" ${ARGN})
+
+    # Come up with the target and C function name.
+    if(_PREFIX)
+        set(NAME ${_PREFIX}-buildinfo)
+        set(FUNCTION_NAME ${_PREFIX}_get_buildinfo)
+    else()
+        set(NAME buildinfo)
+        set(FUNCTION_NAME get_buildinfo)
+    endif()
 
     set(binary_dir ${CMAKE_CURRENT_BINARY_DIR})
+
+    if(CMAKE_CONFIGURATION_TYPES)
+        set(build_type ${CMAKE_CFG_INTDIR})
+    else()
+        set(build_type ${CMAKE_BUILD_TYPE})
+    endif()
 
     # Find git here to allow the user to provide hints.
     find_package(Git)
@@ -28,9 +51,14 @@ function(cable_add_buildinfo_library NAME)
         COMMENT "Updating ${NAME}:"
         OUTPUT ${binary_dir}/${NAME}.c
         COMMAND ${CMAKE_COMMAND}
-        -DNAME=${NAME}
-        -DPROJECT_VERSION=${PROJECT_VERSION}
         -DBINARY_DIR=${binary_dir}
+        -DNAME=${NAME}
+        -DFUNCTION_NAME=${FUNCTION_NAME}
+        -DPROJECT_VERSION=${PROJECT_VERSION}
+        -DSYSTEM_NAME=${CMAKE_SYSTEM_NAME}
+        -DCOMPILER_ID=${CMAKE_CXX_COMPILER_ID}
+        -DCOMPILER_VERSION=${CMAKE_CXX_COMPILER_VERSION}
+        -DBUILD_TYPE=${build_type}
         -P ${cable_buildinfo_template_dir}/buildinfo.cmake
         DEPENDS
         ${cable_buildinfo_template_dir}/buildinfo.cmake

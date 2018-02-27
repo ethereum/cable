@@ -5,11 +5,15 @@
 
 #include "@NAME@.h"
 
-struct buildinfo get_buildinfo()
+const struct buildinfo* @FUNCTION_NAME@()
 {
-    struct buildinfo buildinfo = {
+    static const struct buildinfo buildinfo = {
         .project_version = "@PROJECT_VERSION@",
+        .system_name = "@SYSTEM_NAME@",
+        .compiler_id = "@COMPILER_ID@",
+        .compiler_version = "@COMPILER_VERSION@",
+        .build_type = "@BUILD_TYPE@",
         .git_commit_hash = "@GIT_COMMIT_HASH@",
     };
-    return buildinfo;
+    return &buildinfo;
 }

@@ -23,19 +23,23 @@ function(cable_add_cxx_compiler_flag_if_supported FLAG)
     endif()
 endfunction()
 
-# Set helper variables recognizing C++ compilers.
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU)
-    set(CABLE_COMPILER_GNU TRUE)
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-    # This matches both clang and AppleClang.
-    set(CABLE_COMPILER_CLANG TRUE)
-endif()
-
 
 # Configures the compiler with default flags.
 macro(cable_configure_compiler)
 
+    # Set helper variables recognizing C++ compilers.
+    if(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
+        set(CABLE_COMPILER_GNU TRUE)
+    elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+        # This matches both clang and AppleClang.
+        set(CABLE_COMPILER_CLANG TRUE)
+    endif()
+
     if(CABLE_COMPILER_GNU OR CABLE_COMPILER_CLANG)
+        set(CABLE_COMPILER_GNULIKE TRUE)
+    endif()
+
+    if(CABLE_COMPILER_GNULIKE)
 
         # Enable basing warnings set and treat them as errors.
         add_compile_options(-Wall -Wextra -Werror)

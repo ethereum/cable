@@ -13,6 +13,7 @@ string(TIMESTAMP TIMESTAMP)
 message(
     "       Project Version:  ${PROJECT_VERSION}\n"
     "       System Name:      ${SYSTEM_NAME}\n"
+    "       System Processor: ${SYSTEM_PROCESSOR}\n"
     "       Compiler ID:      ${COMPILER_ID}\n"
     "       Compiler Version: ${COMPILER_VERSION}\n"
     "       Build Type:       ${BUILD_TYPE}\n"

@@ -10,6 +10,7 @@ const struct buildinfo* @FUNCTION_NAME@()
     static const struct buildinfo buildinfo = {
         .project_version = "@PROJECT_VERSION@",
         .system_name = "@SYSTEM_NAME@",
+        .system_processor = "@SYSTEM_PROCESSOR",
         .compiler_id = "@COMPILER_ID@",
         .compiler_version = "@COMPILER_VERSION@",
         .build_type = "@BUILD_TYPE@",

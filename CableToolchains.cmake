@@ -4,6 +4,11 @@
 set(cable_toolchain_dir ${CMAKE_CURRENT_LIST_DIR}/toolchains)
 
 function(cable_configure_toolchain)
+    if(PROJECT_IS_NESTED)
+        # Do nothing in nested projects. The top project is responsible for this setup.
+        return()
+    endif()
+
     cmake_parse_arguments("" "" "DEFAULT" ""  ${ARGN})
 
     set(default_toolchain default)

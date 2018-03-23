@@ -7,6 +7,11 @@ endif()
 set(cable_build_type_included TRUE)
 
 macro(cable_set_build_type)
+    if(PROJECT_IS_NESTED)
+        # Do nothing in nested projects. The top project is responsible for this setup.
+        return()
+    endif()
+
     if(NOT PROJECT_SOURCE_DIR)
         message(FATAL_ERROR "cable_set_build_type() can be used only after project()")
     endif()

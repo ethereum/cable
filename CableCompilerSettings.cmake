@@ -26,6 +26,10 @@ endfunction()
 
 # Configures the compiler with default flags.
 macro(cable_configure_compiler)
+    if(PROJECT_IS_NESTED)
+        # Do nothing in nested projects. The top project is responsible for this setup.
+        return()
+    endif()
 
     # Set helper variables recognizing C++ compilers.
     if(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)

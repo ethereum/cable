@@ -8,7 +8,14 @@
 #
 # This is internal variable automaticaly updated with external tools.
 # Use CABLE_VERSION variable if you need this information.
-set(version 0.1.0)
+set(version 0.1.1)
+
+
+# For conveniance, add the parent dir containg CMake modules to module path.
+get_filename_component(module_dir ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
+list(APPEND CMAKE_MODULE_PATH ${module_dir})
+unset(module_dir)
+
 
 if(CABLE_VERSION)
     # Some other instance of Cable was initialized in the top project.

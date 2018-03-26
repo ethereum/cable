@@ -46,7 +46,7 @@ macro(cable_configure_compiler)
     if(CABLE_COMPILER_GNULIKE)
 
         # Enable basing warnings set and treat them as errors.
-        add_compile_options(-Wall -Wextra -Werror)
+        add_compile_options(-Wall -Wextra -Werror -pedantic)
 
         # Allow unknown pragmas, we don't want to wrap them with #ifdefs.
         add_compile_options(-Wno-unknown-pragmas)

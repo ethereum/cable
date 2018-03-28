@@ -8,7 +8,7 @@
 #
 # This is internal variable automaticaly updated with external tools.
 # Use CABLE_VERSION variable if you need this information.
-set(version 0.1.1)
+set(version 0.1.2)
 
 
 # For conveniance, add the parent dir containg CMake modules to module path.

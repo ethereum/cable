@@ -65,7 +65,7 @@ function(cable_add_buildinfo_library)
         ${cable_buildinfo_template_dir}/buildinfo.cmake
         ${cable_buildinfo_template_dir}/buildinfo.c.in
         ${NAME}-git
-        ${binary_dir}/git_commit_hash.txt
+        ${binary_dir}/gitinfo.txt
     )
 
     string(TIMESTAMP TIMESTAMP)

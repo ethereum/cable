@@ -1,14 +1,16 @@
+# Cable: CMake Bootstrap Library.
 # Copyright 2018 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0. See the LICENSE file.
 
-# Bootstrap the Cable - CMake Boostrap Library.
+# Bootstrap the Cable - CMake Boostrap Library by including this file.
+# e.g. include(cmake/cable/bootstrap.cmake).
 
 
 # Cable version.
 #
 # This is internal variable automaticaly updated with external tools.
 # Use CABLE_VERSION variable if you need this information.
-set(version 0.1.4)
+set(version 0.1.5)
 
 
 # For conveniance, add the parent dir containg CMake modules to module path.

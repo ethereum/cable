@@ -12,16 +12,29 @@ string(TIMESTAMP TIMESTAMP)
 # only if the information has changed.
 file(READ ${BINARY_DIR}/gitinfo.txt GIT_INFO)
 
-# The output of `git describe --long --tags --match=v*`.
-string(REGEX MATCH "v(.+)-([0-9]+)-g([0-9a-f]+)(-dirty)?" out "${GIT_INFO}")
-set(GIT_LATEST_PROJECT_VERSION ${CMAKE_MATCH_1})
-set(GIT_LATEST_PROJECT_VERSION_DISTANCE ${CMAKE_MATCH_2})
-set(GIT_COMMIT_HASH ${CMAKE_MATCH_3})
-if(CMAKE_MATCH_4)
+# The output of `git describe --always --long --tags --match=v*`.
+string(REGEX MATCH "(v(.+)-([0-9]+)-g)?([0-9a-f]+)(-dirty)?" match "${GIT_INFO}")
+
+if(NOT match)
+    message(WARNING "Cannot parse git describe: ${GIT_INFO}")
+endif()
+
+set(GIT_LATEST_PROJECT_VERSION ${CMAKE_MATCH_2})
+set(GIT_LATEST_PROJECT_VERSION_DISTANCE ${CMAKE_MATCH_3})
+set(GIT_COMMIT_HASH ${CMAKE_MATCH_4})
+if(CMAKE_MATCH_5)
     set(GIT_DIRTY TRUE)
     set(dirty_msg " (dirty)")
 else()
     set(GIT_DIRTY FALSE)
+endif()
+
+if(CABLE_DEBUG)
+    message(STATUS "[cable] gitinfo: parsing '${GIT_INFO}':")
+    message(STATUS "[cable]   version:  ${GIT_LATEST_PROJECT_VERSION}")
+    message(STATUS "[cable]   distance: ${GIT_LATEST_PROJECT_VERSION_DISTANCE}")
+    message(STATUS "[cable]   commit:   ${GIT_COMMIT_HASH}")
+    message(STATUS "[cable]   dirty:    ${GIT_DIRTY}")
 endif()
 
 
@@ -33,12 +46,14 @@ if(GIT_COMMIT_HASH)
     endif()
 endif()
 
-if(${PROJECT_VERSION} STREQUAL ${GIT_LATEST_PROJECT_VERSION})
+if(${PROJECT_VERSION} STREQUAL "${GIT_LATEST_PROJECT_VERSION}")
     if(${GIT_LATEST_PROJECT_VERSION_DISTANCE} GREATER 0)
         set(PROJECT_VERSION "${PROJECT_VERSION}-${GIT_LATEST_PROJECT_VERSION_DISTANCE}${version_commit}")
     endif()
 else()
-    message(WARNING "Git project version mismatch: '${GIT_LATEST_PROJECT_VERSION}' vs '${PROJECT_VERSION}'")
+    if(GIT_LATEST_PROJECT_VERSION)
+        message(WARNING "Git project version mismatch: '${GIT_LATEST_PROJECT_VERSION}' vs '${PROJECT_VERSION}'")
+    endif()
     set(PROJECT_VERSION "${PROJECT_VERSION}${version_commit}")
 endif()
 

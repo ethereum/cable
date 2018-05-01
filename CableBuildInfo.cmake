@@ -60,6 +60,7 @@ function(cable_add_buildinfo_library)
         -DCOMPILER_ID=${CMAKE_CXX_COMPILER_ID}
         -DCOMPILER_VERSION=${CMAKE_CXX_COMPILER_VERSION}
         -DBUILD_TYPE=${build_type}
+        -DCABLE_DEBUG=${CABLE_DEBUG}
         -P ${cable_buildinfo_template_dir}/buildinfo.cmake
         DEPENDS
         ${cable_buildinfo_template_dir}/buildinfo.cmake

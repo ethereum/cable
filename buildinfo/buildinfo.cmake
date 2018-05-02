@@ -29,13 +29,11 @@ else()
     set(GIT_DIRTY FALSE)
 endif()
 
-if(CABLE_DEBUG)
-    message(STATUS "[cable] gitinfo: parsing '${GIT_INFO}':")
-    message(STATUS "[cable]   version:  ${GIT_LATEST_PROJECT_VERSION}")
-    message(STATUS "[cable]   distance: ${GIT_LATEST_PROJECT_VERSION_DISTANCE}")
-    message(STATUS "[cable]   commit:   ${GIT_COMMIT_HASH}")
-    message(STATUS "[cable]   dirty:    ${GIT_DIRTY}")
-endif()
+cable_debug("gitinfo: parsing '${GIT_INFO}':")
+cable_debug("  version:  ${GIT_LATEST_PROJECT_VERSION}")
+cable_debug("  distance: ${GIT_LATEST_PROJECT_VERSION_DISTANCE}")
+cable_debug("  commit:   ${GIT_COMMIT_HASH}")
+cable_debug("  dirty:    ${GIT_DIRTY}")
 
 
 if(GIT_COMMIT_HASH)

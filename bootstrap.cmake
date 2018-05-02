@@ -12,11 +12,21 @@
 # Use CABLE_VERSION variable if you need this information.
 set(version 0.1.6)
 
+option(CABLE_DEBUG "Enable Cable debug logs" OFF)
+
+function(cable_log)
+    message(STATUS "[cable ] ${ARGN}")
+endfunction()
+
+function(cable_debug)
+    if(CABLE_DEBUG)
+        message(STATUS "[cable*] ${ARGN}")
+    endif()
+endfunction()
 
 # For conveniance, add the parent dir containg CMake modules to module path.
 get_filename_component(module_dir ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 list(APPEND CMAKE_MODULE_PATH ${module_dir})
-unset(module_dir)
 
 
 if(CABLE_VERSION)
@@ -45,7 +55,7 @@ if(CABLE_VERSION)
 
     message(
         ${severity}
-        "[cable] Parent Cable ${CABLE_VERSION} (${comment}) initialized in `${cable_top_project_name}` project"
+        "[cable ] Parent Cable ${CABLE_VERSION} (${comment}) initialized in `${cable_top_project_name}` project"
     )
 
     unset(version)
@@ -63,6 +73,7 @@ set(PROJECT_IS_NESTED FALSE)
 # Add Cable modules to the CMake module path.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
 
-message(STATUS "[cable] Cable ${CABLE_VERSION} initialized")
-
+cable_log("Cable ${CABLE_VERSION} initialized")
+cable_debug("Project module directory: ${module_dir}")
 unset(version)
+unset(module_dir)

@@ -46,6 +46,7 @@ function(cable_add_buildinfo_library)
         -DSOURCE_DIR=${PROJECT_SOURCE_DIR}
         -DBINARY_DIR=${binary_dir}
         -P ${cable_buildinfo_template_dir}/gitinfo.cmake
+        BYPRODUCTS ${binary_dir}/gitinfo.txt
     )
 
     add_custom_command(

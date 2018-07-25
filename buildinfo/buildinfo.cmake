@@ -59,4 +59,4 @@ message(
     "       Timestamp:        ${TIMESTAMP}"
 )
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${NAME}.c)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.c)

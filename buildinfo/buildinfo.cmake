@@ -10,7 +10,7 @@ string(TIMESTAMP TIMESTAMP)
 
 # Read the git info from a file. The gitinfo is suppose to update the file
 # only if the information has changed.
-file(READ ${BINARY_DIR}/gitinfo.txt GIT_INFO)
+file(READ ${OUTPUT_DIR}/gitinfo.txt GIT_INFO)
 
 # The output of `git describe --always --long --tags --match=v*`.
 string(REGEX MATCH "(v(.+)-([0-9]+)-g)?([0-9a-f]+)(-dirty)?" match "${GIT_INFO}")
@@ -66,6 +66,6 @@ message(
     "       Timestamp:        ${TIMESTAMP}"
 )
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.c)
-configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.sh.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.sh)
-configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.ps1.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.ps1)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${OUTPUT_DIR}/buildinfo.c)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.sh.in ${OUTPUT_DIR}/buildinfo.sh)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.ps1.in ${OUTPUT_DIR}/buildinfo.ps1)

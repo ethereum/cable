@@ -22,9 +22,9 @@ function(cable_add_buildinfo_library)
     set(name ${_PROJECT_NAME}-buildinfo)
     set(FUNCTION_NAME ${_PROJECT_NAME}_get_buildinfo)
 
-    set(binary_dir ${CMAKE_CURRENT_BINARY_DIR})
-    set(header_file ${binary_dir}/${_PROJECT_NAME}/buildinfo.h)
-    set(source_file ${binary_dir}/${_PROJECT_NAME}/buildinfo.c)
+    set(output_dir ${CMAKE_CURRENT_BINARY_DIR}/${_PROJECT_NAME})
+    set(header_file ${output_dir}/buildinfo.h)
+    set(source_file ${output_dir}/buildinfo.c)
 
     if(CMAKE_CONFIGURATION_TYPES)
         set(build_type ${CMAKE_CFG_INTDIR})
@@ -45,16 +45,16 @@ function(cable_add_buildinfo_library)
         COMMAND ${CMAKE_COMMAND}
         -DGIT=${GIT_EXECUTABLE}
         -DSOURCE_DIR=${PROJECT_SOURCE_DIR}
-        -DBINARY_DIR=${binary_dir}
+        -DOUTPUT_DIR=${output_dir}
         -P ${cable_buildinfo_template_dir}/gitinfo.cmake
-        BYPRODUCTS ${binary_dir}/gitinfo.txt
+        BYPRODUCTS ${output_dir}/gitinfo.txt
     )
 
     add_custom_command(
         COMMENT "Updating ${name}:"
         OUTPUT ${source_file}
         COMMAND ${CMAKE_COMMAND}
-        -DBINARY_DIR=${binary_dir}
+        -DOUTPUT_DIR=${output_dir}
         -DPROJECT_NAME=${_PROJECT_NAME}
         -DFUNCTION_NAME=${FUNCTION_NAME}
         -DPROJECT_VERSION=${PROJECT_VERSION}
@@ -68,7 +68,7 @@ function(cable_add_buildinfo_library)
         ${cable_buildinfo_template_dir}/buildinfo.cmake
         ${cable_buildinfo_template_dir}/buildinfo.c.in
         ${name}-git
-        ${binary_dir}/gitinfo.txt
+        ${output_dir}/gitinfo.txt
     )
 
     string(TIMESTAMP TIMESTAMP)
@@ -78,5 +78,11 @@ function(cable_add_buildinfo_library)
     # Make is static and do not build by default until some other target will actually use it.
     add_library(${name} STATIC EXCLUDE_FROM_ALL ${source_file} ${header_file})
 
-    target_include_directories(${name} PUBLIC ${binary_dir})
+    target_include_directories(${name} PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+    set_target_properties(
+        ${name} PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${output_dir}
+        ARCHIVE_OUTPUT_DIRECTORY ${output_dir}
+        OUTPUT_NAME buildinfo
+    )
 endfunction()

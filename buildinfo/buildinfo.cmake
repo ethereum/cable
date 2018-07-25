@@ -48,8 +48,15 @@ else()
     set(PROJECT_VERSION "${PROJECT_VERSION}${version_commit}")
 endif()
 
+if(PROJECT_VERSION MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$")
+    set(PROJECT_VERSION_IS_PRERELEASE false)
+else()
+    set(PROJECT_VERSION_IS_PRERELEASE true)
+    set(prerelease_comment " (prerelease)")
+endif()
+
 message(
-    "       Project Version:  ${PROJECT_VERSION}\n"
+    "       Project Version:  ${PROJECT_VERSION}${prerelease_comment}\n"
     "       System Name:      ${SYSTEM_NAME}\n"
     "       System Processor: ${SYSTEM_PROCESSOR}\n"
     "       Compiler ID:      ${COMPILER_ID}\n"
@@ -60,3 +67,5 @@ message(
 )
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.c.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.c)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.sh.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.sh)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/buildinfo.ps1.in ${BINARY_DIR}/${PROJECT_NAME}/buildinfo.ps1)

@@ -101,6 +101,19 @@ macro(cable_configure_compiler)
 
         endif()
 
+        # Option for arch=native.
+        option(NATIVE "Build for native CPU" OFF)
+        if(NATIVE)
+            if(MSVC)
+                add_compile_options(-arch:AVX)
+            else()
+                add_compile_options(-mtune=native -march=native)
+            endif()
+        else(NOT MSVC)
+            # Tune for currently most common CPUs.
+            cable_add_cxx_compiler_flag_if_supported(-mtune=generic)
+        endif()
+
         # Sanitizers support.
         set(SANITIZE OFF CACHE STRING "Build with the specified sanitizer")
         if(SANITIZE)

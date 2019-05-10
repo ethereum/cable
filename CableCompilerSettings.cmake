@@ -89,6 +89,10 @@ macro(cable_configure_compiler)
 
         elseif(MSVC)
 
+            # Get rid of default warning level.
+            string(REPLACE " /W3" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+            string(REPLACE " /W3" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+
             # Enable basing warnings set and treat them as errors.
             add_compile_options(/W4 /WX)
 

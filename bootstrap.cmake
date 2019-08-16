@@ -18,6 +18,9 @@ if(EXISTS ${module_dir})
     list(APPEND CMAKE_MODULE_PATH ${module_dir})
 endif()
 
+# Always add this Cable instance modules to the CMake module path.
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+
 if(CABLE_VERSION)
     # Some other instance of Cable has been initialized in the top project.
 
@@ -60,9 +63,6 @@ set(CABLE_VERSION ${version})
 
 # Mark this project as non-nested.
 set(PROJECT_IS_NESTED FALSE)
-
-# Add Cable modules to the CMake module path.
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
 
 cable_log("Cable ${CABLE_VERSION} initialized")
 cable_debug("Project CMake modules directory: ${module_dir}")

@@ -75,7 +75,7 @@ message(
     "       Compiler ID:      ${COMPILER_ID}\n"
     "       Compiler Version: ${COMPILER_VERSION}\n"
     "       Build Type:       ${BUILD_TYPE}\n"
-    "       Git Info:         ${GIT_LATEST_PROJECT_VERSION} ${GIT_LATEST_PROJECT_VERSION_DISTANCE} ${GIT_COMMIT_HASH}${dirty_msg}\n"
+    "       Git Info:         ${GIT_LATEST_PROJECT_VERSION}/${GIT_LATEST_PROJECT_VERSION_DISTANCE}/${GIT_COMMIT_HASH}${dirty_msg}\n"
     "       Timestamp:        ${TIMESTAMP}"
 )
 

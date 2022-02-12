@@ -76,6 +76,8 @@ message(
     "       Compiler Version: ${COMPILER_VERSION}\n"
     "       Build Type:       ${BUILD_TYPE}\n"
     "       Git Info:         ${GIT_LATEST_PROJECT_VERSION}/${GIT_LATEST_PROJECT_VERSION_DISTANCE}/${GIT_COMMIT_HASH}${dirty_msg}\n"
+    "       Git Branch:       ${GIT_BRANCH}\n"
+    "       Git Origin URL:   ${GIT_ORIGIN_URL}\n"
     "       Timestamp:        ${TIMESTAMP}"
 )
 

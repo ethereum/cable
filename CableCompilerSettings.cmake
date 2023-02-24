@@ -10,7 +10,7 @@
 # CHANGELOG
 #
 # 1.2.0 - 2023-02-24
-#
+# - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
 #
 # 1.1.0 - 2020-06-20
@@ -123,10 +123,6 @@ macro(cable_configure_compiler)
             cable_add_cxx_compiler_flag_if_supported(-Wimplicit-fallthrough)
 
         elseif(MSVC)
-
-            # Get rid of default warning level.
-            string(REPLACE " /W3" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-            string(REPLACE " /W3" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
             # Enable basing warnings set and treat them as errors.
             add_compile_options(/W4 /WX)

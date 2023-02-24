@@ -14,6 +14,7 @@
 # - Keep compiler warnings about unknown pragmas.
 # - Keep MSVC warning C5030: attribute is not recognized. It should be disabled in source code.
 # - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
+# - Drop explicit -Wimplicit-fallthrough. It is a part of -Wextra.
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
 #
 # 1.1.0 - 2020-06-20
@@ -119,8 +120,6 @@ macro(cable_configure_compiler)
                     endif()
                 endif()
             endif()
-
-            cable_add_cxx_compiler_flag_if_supported(-Wimplicit-fallthrough)
 
         elseif(MSVC)
 

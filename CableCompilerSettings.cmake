@@ -10,6 +10,7 @@
 # CHANGELOG
 #
 # 1.2.0 - 2023-02-24
+# - Do not set -Werror nor /WX. This has been standardized in CMake 3.24 as CMAKE_COMPILE_WARNING_AS_ERROR.
 # - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
 #
@@ -91,8 +92,8 @@ macro(cable_configure_compiler)
                 add_compile_options(-Wpedantic)
             endif()
 
-            # Enable basing warnings set and treat them as errors.
-            add_compile_options(-Werror -Wall -Wextra -Wshadow)
+            # Enable basic warnings.
+            add_compile_options(-Wall -Wextra -Wshadow)
 
             if(NOT cable_NO_CONVERSION_WARNINGS)
                 # Enable conversion warnings if not explicitly disabled.
@@ -124,8 +125,8 @@ macro(cable_configure_compiler)
 
         elseif(MSVC)
 
-            # Enable basing warnings set and treat them as errors.
-            add_compile_options(/W4 /WX)
+            # Enable basic warnings.
+            add_compile_options(/W4)
 
             # Allow unknown pragmas, we don't want to wrap them with #ifdefs.
             add_compile_options(/wd4068)

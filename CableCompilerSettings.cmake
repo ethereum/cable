@@ -11,6 +11,7 @@
 #
 # 1.2.0 - 2023-02-24
 # - Do not set -Werror nor /WX. This has been standardized in CMake 3.24 as CMAKE_COMPILE_WARNING_AS_ERROR.
+# - Keep compiler warnings about unknown pragmas.
 # - Keep MSVC warning C5030: attribute is not recognized. It should be disabled in source code.
 # - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
@@ -101,9 +102,6 @@ macro(cable_configure_compiler)
                 add_compile_options(-Wconversion -Wsign-conversion)
             endif()
 
-            # Allow unknown pragmas, we don't want to wrap them with #ifdefs.
-            add_compile_options(-Wno-unknown-pragmas)
-
             # Stack protection.
             check_cxx_compiler_flag(-fstack-protector fstack-protector)
             if(fstack-protector)
@@ -128,9 +126,6 @@ macro(cable_configure_compiler)
 
             # Enable basic warnings.
             add_compile_options(/W4)
-
-            # Allow unknown pragmas, we don't want to wrap them with #ifdefs.
-            add_compile_options(/wd4068)
 
         endif()
 

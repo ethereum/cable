@@ -11,6 +11,7 @@
 #
 # 1.2.0 - 2023-02-24
 # - Do not set -Werror nor /WX. This has been standardized in CMake 3.24 as CMAKE_COMPILE_WARNING_AS_ERROR.
+# - Keep MSVC warning C5030: attribute is not recognized. It should be disabled in source code.
 # - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
 #
@@ -130,9 +131,6 @@ macro(cable_configure_compiler)
 
             # Allow unknown pragmas, we don't want to wrap them with #ifdefs.
             add_compile_options(/wd4068)
-
-            # Allow unknown C++ attributes.
-            add_compile_options(/wd5030)
 
         endif()
 

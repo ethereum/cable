@@ -1,13 +1,17 @@
 # Cable: CMake Bootstrap Library <https://github.com/ethereum/cable>
-# Copyright 2018-2020 Pawel Bylica.
+# Copyright 2018 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
-# Cable Compiler Settings, version 1.0.1
+# Cable Compiler Settings, version 1.2.0
 #
 # This CMake module provides default configuration (with some options)
 # for C/C++ compilers. Use cable_configure_compiler().
 #
 # CHANGELOG
+#
+# 1.2.0 - 2023-02-24
+#
+# - Use PROJECT_IS_TOP_LEVEL if available (or define it).
 #
 # 1.1.0 - 2020-06-20
 # - Allow unknown C++ attributes in MSVC compiler.
@@ -55,15 +59,13 @@ macro(cable_configure_compiler)
         message(FATAL_ERROR "cable_configure_compiler() must be used after project()")
     endif()
 
-    # Determine if this is the main or a subproject. Leave this variable available for later use.
-    if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-        set(PROJECT_IS_MAIN TRUE)
-    else()
-        set(PROJECT_IS_MAIN FALSE)
+    if(NOT DEFINED PROJECT_IS_TOP_LEVEL)
+        # Define PROJECT_IS_TOP_LEVEL (since CMake 3.21) if not available.
+        string(COMPARE EQUAL ${CMAKE_SOURCE_DIR} ${PROJECT_SOURCE_DIR} PROJECT_IS_TOP_LEVEL)
     endif()
 
-    if(PROJECT_IS_MAIN)
-        # Do this configuration only in the main project.
+    if(PROJECT_IS_TOP_LEVEL)
+        # Do this configuration only in the top level project.
 
         cmake_parse_arguments(cable "NO_CONVERSION_WARNINGS;NO_STACK_PROTECTION;NO_PEDANTIC" "" "" ${ARGN})
 

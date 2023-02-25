@@ -9,7 +9,7 @@
 #
 # CHANGELOG
 #
-# 1.2.0 - 2023-02-24
+# 1.2.0 - 2023-02-25
 # - Do not set -Werror nor /WX. This has been standardized in CMake 3.24 as CMAKE_COMPILE_WARNING_AS_ERROR.
 # - Keep compiler warnings about unknown pragmas.
 # - Keep MSVC warning C5030: attribute is not recognized. It should be disabled in source code.

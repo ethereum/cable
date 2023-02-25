@@ -16,6 +16,7 @@
 # - Do not try to erase MSVC default warning level /W3. This is not set since CMake 3.15 (CMP0092).
 # - Drop explicit -Wimplicit-fallthrough. It is a part of -Wextra.
 # - Use PROJECT_IS_TOP_LEVEL if available (or define it).
+# - Use include_guard().
 #
 # 1.1.0 - 2020-06-20
 # - Allow unknown C++ attributes in MSVC compiler.
@@ -27,11 +28,7 @@
 #
 # 1.0.0 - 2019-12-20
 
-if(cable_compiler_settings_included)
-    return()
-endif()
-set(cable_compiler_settings_included TRUE)
-
+include_guard()
 include(CheckCXXCompilerFlag)
 
 # Adds CXX compiler flag if the flag is supported by the compiler.

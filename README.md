@@ -1,6 +1,7 @@
 # Cable
 
 [![readme style: standard][readme style standard badge]][standard readme]
+[![GitPOAP Badge](https://public-api.gitpoap.io/v1/repo/ethereum/cable/badge)](https://www.gitpoap.io/gh/ethereum/cable)
 
 > Cable: CMake Bootstrap Library
 
